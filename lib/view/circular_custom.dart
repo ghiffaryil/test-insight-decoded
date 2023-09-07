@@ -11,7 +11,9 @@ class CircularCustom extends StatefulWidget {
 class _CircularCustomState extends State<CircularCustom> {
   // create some values
   Color pickerColor = const Color(0xff443a49);
-  Color currentColor = const Color(0xff443a49);
+  Color currentPickerColor = const Color(0xff443a49);
+
+  double _currentSliderValue = 20;
 
 // ValueChanged<Color> callback
   void changeColor(Color color) {
@@ -45,28 +47,36 @@ class _CircularCustomState extends State<CircularCustom> {
                     showDialogColor();
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: Colors.blueAccent,
-                    ),
-                    child: const Text(
-                      'Change Color',
-                      style: TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: currentPickerColor,
                     ),
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(
               height: 40,
             ),
             Row(
-              children: const [
-                Text('Select Size'),
-                SizedBox(
+              children: [
+                const Text('Select Size'),
+                const SizedBox(
                   width: 30,
                 ),
-                Text('Size Picker')
+                Slider(
+                  thumbColor: currentPickerColor,
+                  value: _currentSliderValue,
+                  min: 10,
+                  max: 200,
+                  divisions: 5,
+                  label: _currentSliderValue.round().toString(),
+                  onChanged: (double value) {
+                    setState(() {
+                      _currentSliderValue = value;
+                    });
+                  },
+                ),
               ],
             ),
             const SizedBox(
@@ -75,8 +85,12 @@ class _CircularCustomState extends State<CircularCustom> {
             Container(
               padding: const EdgeInsets.all(30),
               alignment: Alignment.center,
-              child: CircularProgressIndicator(
-                color: currentColor,
+              child: SizedBox(
+                width: _currentSliderValue,
+                height: _currentSliderValue,
+                child: CircularProgressIndicator(
+                  color: currentPickerColor,
+                ),
               ),
             )
           ],
@@ -100,7 +114,7 @@ class _CircularCustomState extends State<CircularCustom> {
           ElevatedButton(
             child: const Text('Got it'),
             onPressed: () {
-              setState(() => currentColor = pickerColor);
+              setState(() => currentPickerColor = pickerColor);
               Navigator.of(context).pop();
             },
           ),
