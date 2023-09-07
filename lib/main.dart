@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_flutter_id/model/provider/state_provider.dart';
 import 'package:test_flutter_id/view/home.dart';
-import 'view/product_list.dart';
 
 void main() {
   // runApp(MyApp());
   runApp(
     ChangeNotifierProvider(
       create: (context) => CounterProvider(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

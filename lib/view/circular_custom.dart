@@ -14,6 +14,7 @@ class _CircularCustomState extends State<CircularCustom> {
   Color currentPickerColor = const Color(0xff443a49);
 
   double _currentSliderValue = 20;
+  double _circularStrokeWidth = 5;
 
 // ValueChanged<Color> callback
   void changeColor(Color color) {
@@ -82,6 +83,30 @@ class _CircularCustomState extends State<CircularCustom> {
             const SizedBox(
               height: 50,
             ),
+            Row(
+              children: [
+                const Text('Stroke Width'),
+                const SizedBox(
+                  width: 30,
+                ),
+                Slider(
+                  thumbColor: currentPickerColor,
+                  value: _circularStrokeWidth,
+                  min: 5,
+                  max: 100,
+                  divisions: 10,
+                  label: _circularStrokeWidth.round().toString(),
+                  onChanged: (double value) {
+                    setState(() {
+                      _circularStrokeWidth = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 50,
+            ),
             Container(
               padding: const EdgeInsets.all(30),
               alignment: Alignment.center,
@@ -89,6 +114,7 @@ class _CircularCustomState extends State<CircularCustom> {
                 width: _currentSliderValue,
                 height: _currentSliderValue,
                 child: CircularProgressIndicator(
+                  strokeWidth: _circularStrokeWidth,
                   color: currentPickerColor,
                 ),
               ),
